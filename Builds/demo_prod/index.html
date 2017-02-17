@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en-us">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+
+    <title>Demo Select File</title>
+    <link rel="shortcut icon" href="img/favicon.ico" />
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body class="template">
+
+    <div class="template-wrap clear" id="overlay">
+        <img src="img/logo.png" width="256px" height="256px" alt="logo" title="logo"/>
+        <div class="loader"></div>
+    </div>
+
+    <div class="template-wrap clear" id="unity" name="unity" style="display:none">
+        <canvas class="emscripten" id="canvas" oncontextmenu="event.preventDefault()" height="540px" width="864px"></canvas>
+    </div>
+
+    <script src="js/UnityInterface.js"></script>
+    <script type='text/javascript'>
+        var Module = {
+            TOTAL_MEMORY: 134217728,
+            errorhandler: null, // arguments: err, url, line. This function must return 'true' if the error is handled, otherwise 'false'
+            compatibilitycheck: null,
+            backgroundColor: "#F2F2F2",
+            splashStyle: "Light",
+            dataUrl: "Release/demo.data",
+            codeUrl: "Release/demo.js",
+            asmUrl: "Release/demo.asm.js",
+            memUrl: "Release/demo.mem",
+
+            onRuntimeInitialized: function() {
+                console.log("Unity Loaded");
+
+                document.getElementById("overlay").style.display = "none";
+                document.getElementById("unity").style.display = "";
+
+                var adjustRetina = function() {
+                  var canvas = document.querySelector("canvas");
+                  canvas.width = canvas.clientWidth * 2;
+                  canvas.height = canvas.clientHeight * 2;
+                  canvas.style.transformOrigin = canvas.width/2 + " " + canvas.height/2;
+                  canvas.style.transform = "scale("+1.0/2+")";
+                }
+                adjustRetina();
+            }
+        };
+
+        /***** UNITY INTERFACE *****/
+    </script>
+    <script src="Release/UnityLoader.js"></script>
+
+</body>
+
+</html>
