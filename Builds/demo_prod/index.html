@@ -23,7 +23,21 @@
         <canvas class="emscripten" id="canvas" oncontextmenu="event.preventDefault()" height="540px" width="864px"></canvas>
     </div>
 
-    <script src="js/UnityInterface.js"></script>
+    <div id="video" style="display:none">
+        <video id="stream"></video>
+        <div id="buttonWrapper">
+          <button id="buttonClose">
+            <img id="iconClose" src="img/icon-close.png">
+          </button>
+          <button id="buttonPause" class="button">PAUSE</button>
+          <button id="buttonResume" class="button">RESUME</button>
+          <button id="buttonSave" class="button">SAVE</button>
+        </div>
+    </div>
+    <canvas id="imageCanvas" style="display:none"></canvas>
+    <input id="input" type="file" style="visibility:hidden"></input>
+
+    <script src="js/MediaInterface.js"></script>
     <script type='text/javascript'>
         var Module = {
             TOTAL_MEMORY: 134217728,

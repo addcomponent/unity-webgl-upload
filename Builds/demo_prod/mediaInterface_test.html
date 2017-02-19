@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Media Interface Test</title>
+</head>
+
+<body>
+  <div style="float:left;">
+    <div id="unity">
+        <input id="maxSize" type="text" value="-1"></input>
+        <button onclick="testEnableCamera()">CAMERA</button>
+        <button onclick="selectImage(512)">SELECT</button>
+        </br>
+        <p>UNITY WINDOW</p>
+        <canvas id="canvas" width="320px" height="240px" style="background-color:#F2F2F2"></canvas>
+        <p>RESULT IMAGE</p>
+        <img id="unityImage" width="320px" height="240px" style="background-color:#F2F2F2; object-fit:contain">
+    </div>
+    <div id="video" style="display:none">
+        <button id="buttonClose">CLOSE</button>
+        <button id="buttonPause">PAUSE</button>
+        <button id="buttonResume">RESUME</button>
+        <button id="buttonSave">SAVE</button>
+        </br>
+        <p>CAMERA WINDOW</p>
+        <video id="stream" width="320px" height="240px"></video>
+    </div>
+    <canvas id="imageCanvas" style="display:none"></canvas>
+    <input id="input" type="file" style="visibility:hidden"></input>
+</div>
+    <div style="float:left;width:256px;word-wrap:break-word;margin:10px">
+      <p>LOG</p>
+      <p id="log"></p>
+    </div>
+
+    <script src="js/MediaInterface.js"></script>
+    <script type='text/javascript'>
+        var input = document.getElementById("maxSize");
+        var resultImage = document.getElementById("unityImage");
+        var logElement = document.getElementById("log");
+
+        function testEnableCamera() {
+            enableCamera(false, input.value);
+        }
+
+        function testSelectImage() {
+            selectImage(input.value);
+        }
+
+        function SendMessage(gameObject, method, param) {
+          switch(method) {
+            case CALLBACK_CAMERA:
+            var json = JSON.parse(param);
+            if(json.success && json.image !== null) {
+              resultImage.src = json.image;
+            }
+            break;
+
+            case CALLBACK_SELECT_IMAGE:
+            var json = JSON.parse(param);
+            if(json.success) {
+              resultImage.src = json.image;
+            }
+            break;
+
+            case FUNCTION_LOG:
+            console.log(param);
+            logElement.innerHTML += param + "</br>";
+            break;
+          }
+        }
+    </script>
+</body>
+
+</html>
